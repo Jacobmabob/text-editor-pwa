@@ -12,6 +12,13 @@ butInstall.addEventListener('click', async () => {
     console.log('hi')
     const promptEvent = window.deferredPrompt;
 
+    if ('getInstalledRelatedApps' in window.navigator) {
+        const relatedApps = await navigator.getInstalledRelatedApps();
+        relatedApps.forEach((app) => {
+          console.log(app.platform, app.url);
+        });
+      }
+
     if (!promptEvent) {
      return;
     }
@@ -24,5 +31,6 @@ butInstall.addEventListener('click', async () => {
 });
 
 window.addEventListener('appinstalled', (event) => {
+    butInstall.classList.toggle('hidden', true);
   window.deferredPrompt = null;
 });
